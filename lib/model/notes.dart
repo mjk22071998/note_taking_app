@@ -1,24 +1,24 @@
 import 'dart:convert';
 
-class Notes {
+class Note {
   int id;
   String title;
   String body;
   DateTime creationDate;
-  Notes({
+  Note({
     required this.id,
     required this.title,
     required this.body,
     required this.creationDate,
   });
 
-  Notes copyWith({
+  Note copyWith({
     int? id,
     String? title,
     String? body,
     DateTime? creationDate,
   }) {
-    return Notes(
+    return Note(
       id: id ?? this.id,
       title: title ?? this.title,
       body: body ?? this.body,
@@ -35,8 +35,8 @@ class Notes {
     };
   }
 
-  factory Notes.fromMap(Map<String, dynamic> map) {
-    return Notes(
+  factory Note.fromMap(Map<String, dynamic> map) {
+    return Note(
       id: map['id']?.toInt() ?? 0,
       title: map['title'] ?? '',
       body: map['body'] ?? '',
@@ -46,7 +46,7 @@ class Notes {
 
   String toJson() => json.encode(toMap());
 
-  factory Notes.fromJson(String source) => Notes.fromMap(json.decode(source));
+  factory Note.fromJson(String source) => Note.fromMap(json.decode(source));
 
   @override
   String toString() {
@@ -57,7 +57,7 @@ class Notes {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
   
-    return other is Notes &&
+    return other is Note &&
       other.id == id &&
       other.title == title &&
       other.body == body &&

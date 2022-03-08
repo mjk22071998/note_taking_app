@@ -36,7 +36,7 @@ class DBHelper {
     return db;
   }
 
-  addNote(Notes note) async {
+  addNote(Note note) async {
     final db = await database;
     db!.insert(tableName, note.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace);

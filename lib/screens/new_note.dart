@@ -14,7 +14,7 @@ class _AddNoteState extends State<AddNote> {
   TextEditingController titleController = TextEditingController();
   TextEditingController bodyController = TextEditingController();
 
-  saveNote(BuildContext context, Notes note) {
+  saveNote(BuildContext context, Note note) {
     DBHelper.dbHelper.addNote(note);
     Fluttertoast.showToast(
         msg: "Note Added",
@@ -61,7 +61,7 @@ class _AddNoteState extends State<AddNote> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           setState(() {
-            Notes note = Notes(
+            Note note = Note(
                 id: -1,
                 title: titleController.value.text,
                 body: bodyController.value.text,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:note_taking_app/database/sqflite_database.dart';
 
 import 'model/notes.dart';
+import 'screens/display_note.dart';
 import 'screens/new_note.dart';
 
 void main() {
@@ -16,8 +17,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Note Taking App",
       initialRoute: "/",
-      routes: {"/": (context) => const HomePage(),
-        "/AddNote":(context)=> const AddNote()
+      routes: {
+        "/": (context) => const HomePage(),
+        "/AddNote": (context) => const AddNote(),
+        "/DisplayNote": (context) => const DisplayNote(),
       },
       theme: ThemeData(primarySwatch: Colors.deepOrange),
     );
@@ -74,11 +77,14 @@ class _HomePageState extends State<HomePage> {
                       child: ListView.builder(
                         itemCount: maps.length,
                         itemBuilder: (context, index) {
-                          Notes note = Notes.fromMap(maps[index]);
+                          Note note = Note.fromMap(maps[index]);
                           return Card(
                             child: ListTile(
                               title: Text(note.title),
                               subtitle: Text(note.body),
+                              onTap: () {
+                                Navigator.pushNamed(context, "/DisplayNote", arguments: note);
+                              },
                             ),
                           );
                         },
