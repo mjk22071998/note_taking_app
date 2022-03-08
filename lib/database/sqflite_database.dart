@@ -17,9 +17,9 @@ class DBHelper {
   }
 
   static const String tableName = "Notes";
-  static const String col1Name = "Title";
-  static const String col2Name = "Body";
-  static const String col3Name = "Creation_Date";
+  static const String col1Name = "title";
+  static const String col2Name = "body";
+  static const String col3Name = "creationDate";
 
   Future<Database> initDB() async {
     Database db = await openDatabase(join(await getDatabasesPath(), "notes.db"),

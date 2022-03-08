@@ -31,7 +31,7 @@ class Notes {
       'id': id,
       'title': title,
       'body': body,
-      'creationDate': creationDate.millisecondsSinceEpoch,
+      'creationDate': creationDate.toString(),
     };
   }
 
@@ -40,7 +40,7 @@ class Notes {
       id: map['id']?.toInt() ?? 0,
       title: map['title'] ?? '',
       body: map['body'] ?? '',
-      creationDate: DateTime.fromMillisecondsSinceEpoch(map['creationDate']),
+      creationDate: DateTime.parse(map['creationDate']),
     );
   }
 
