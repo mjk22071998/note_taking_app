@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
 project(note_taking_app LANGUAGES CXX)
 
-set(BINARY_NAME "note_taking_app")
+set(BINARY_NAME "Note Taking App")
 
 cmake_policy(SET CMP0063 NEW)
 
