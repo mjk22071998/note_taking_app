@@ -9,12 +9,11 @@ class DBHelper {
 
   Future<Database?> get database async {
     if (_database == null) {
-      _database = initDB();
+      _database = await initDB();
       return _database;
-    } else{
+    } else {
       return _database;
     }
-    
   }
 
   static const String tableName = "Notes";
@@ -22,8 +21,8 @@ class DBHelper {
   static const String col2Name = "Body";
   static const String col3Name = "Creation_Date";
 
-  initDB() async {
-    return await openDatabase(join(await getDatabasesPath(), "notes.db"),
+  Future<Database> initDB() async {
+    Database db = await openDatabase(join(await getDatabasesPath(), "notes.db"),
         onCreate: ((db, version) async {
       await db.execute('''
       CREATE TABLE $tableName (
@@ -34,6 +33,7 @@ class DBHelper {
       )
       ''');
     }), version: 1);
+    return db;
   }
 
   addNote(Notes note) async {

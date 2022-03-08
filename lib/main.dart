@@ -58,8 +58,6 @@ class _HomePageState extends State<HomePage> {
       body: FutureBuilder(
         future: getNotes(),
         builder: (context, notesSnapshot) {
-          List<Map<String, dynamic>> maps =
-              notesSnapshot.data as List<Map<String, dynamic>>;
           switch (notesSnapshot.connectionState) {
             case ConnectionState.waiting:
               {
@@ -75,26 +73,31 @@ class _HomePageState extends State<HomePage> {
                         "You have'nt created any notes yet, Please create one"),
                   );
                 } else {
+                  List<Map<String, dynamic>> maps =
+                      notesSnapshot.data as List<Map<String, dynamic>>;
                   return Padding(
                     padding: const EdgeInsets.all(10),
                     child: ListView.builder(
                       itemCount: maps.length,
                       itemBuilder: (context, index) {
                         Notes note = Notes.fromMap(maps[index]);
-                        return Card( child:  ListTile(
-                          title: Text(note.title),
-                          subtitle: Text(note.body),
-                        ),);
+                        return Card(
+                          child: ListTile(
+                            title: Text(note.title),
+                            subtitle: Text(note.body),
+                          ),
+                        );
                       },
                     ),
                   );
                 }
               }
-              default:{
+            default:
+              {
                 return const Center(
-                    child: Text(
-                        "You have'nt created any notes yet, Please create one"),
-                  );
+                  child: Text(
+                      "You have'nt created any notes yet, Please create one"),
+                );
               }
           }
         },
