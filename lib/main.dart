@@ -15,21 +15,7 @@ class MyApp extends StatelessWidget {
       title: "Note Taking App",
       initialRoute: "/",
       routes: {"/": (context) => const HomePage()},
-      theme: ThemeData(
-        colorScheme: ColorScheme(
-          brightness: Brightness.light,
-          primary: Colors.deepOrange,
-          onPrimary: Colors.deepOrangeAccent,
-          secondary: Colors.deepPurple,
-          onSecondary: Colors.deepPurpleAccent,
-          error: Colors.red,
-          onError: Colors.redAccent,
-          background: Colors.white,
-          onBackground: Colors.grey.shade100,
-          surface: Colors.white,
-          onSurface: Colors.grey.shade100,
-        ),
-      ),
+      theme: ThemeData(primarySwatch: Colors.deepOrange),
     );
   }
 }
@@ -49,25 +35,55 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Note Taking App",
-          style: TextStyle(color: Colors.white),
+        appBar: AppBar(
+          title: const Text(
+            "Note Taking App",
+          ),
         ),
-      ),
-      body: FutureBuilder(
-        future: getNotes(),
-        builder: (context, notesSnapshot) {
-          switch (notesSnapshot.connectionState) {
-            case ConnectionState.waiting:
-              {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            case ConnectionState.done:
-              {
-                if (notesSnapshot.data == null) {
+        body: FutureBuilder(
+          future: getNotes(),
+          builder: (context, notesSnapshot) {
+            switch (notesSnapshot.connectionState) {
+              case ConnectionState.waiting:
+                {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              case ConnectionState.done:
+                {
+                  if (notesSnapshot.data == null) {
+                    return const Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Center(
+                        child: Text(
+                          "You have'nt created any notes yet, Please create one",
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    );
+                  } else {
+                    List<Map<String, dynamic>> maps =
+                        notesSnapshot.data as List<Map<String, dynamic>>;
+                    return Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: ListView.builder(
+                        itemCount: maps.length,
+                        itemBuilder: (context, index) {
+                          Notes note = Notes.fromMap(maps[index]);
+                          return Card(
+                            child: ListTile(
+                              title: Text(note.title),
+                              subtitle: Text(note.body),
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  }
+                }
+              default:
+                {
                   return const Padding(
                     padding: EdgeInsets.all(10),
                     child: Center(
@@ -77,46 +93,16 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   );
-                } else {
-                  List<Map<String, dynamic>> maps =
-                      notesSnapshot.data as List<Map<String, dynamic>>;
-                  return Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: ListView.builder(
-                      itemCount: maps.length,
-                      itemBuilder: (context, index) {
-                        Notes note = Notes.fromMap(maps[index]);
-                        return Card(
-                          child: ListTile(
-                            title: Text(note.title),
-                            subtitle: Text(note.body),
-                          ),
-                        );
-                      },
-                    ),
-                  );
                 }
-              }
-            default:
-              {
-                return const Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Center(
-                    child: Text(
-                      "You have'nt created any notes yet, Please create one",
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                );
-              }
-          }
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){},
-        elevation: 5,
-        child: const Icon(Icons.add),
-      )
-    );
+            }
+          },
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          elevation: 5,
+          child: const Icon(
+            Icons.add,
+          ),
+        ));
   }
 }
