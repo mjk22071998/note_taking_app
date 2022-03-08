@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:note_taking_app/database/sqflite_database.dart';
 import 'package:note_taking_app/model/notes.dart';
 
 class DisplayNote extends StatelessWidget {
@@ -10,6 +11,15 @@ class DisplayNote extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Note"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                DBHelper.dbHelper.deleteNote(note.id);
+                Navigator.pushNamedAndRemoveUntil(
+                    context, "/", (route) => false);
+              },
+              icon: const Icon(Icons.delete))
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -20,11 +30,12 @@ class DisplayNote extends StatelessWidget {
               style:
                   const TextStyle(fontSize: 28.0, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 16.0,),
+            const SizedBox(
+              height: 16.0,
+            ),
             Text(
               note.body,
-              style:
-                  const TextStyle(fontSize: 18.0),
+              style: const TextStyle(fontSize: 18.0),
             ),
           ],
         ),
