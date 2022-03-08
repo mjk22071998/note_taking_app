@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:note_taking_app/database/sqflite_database.dart';
-import 'package:note_taking_app/model/notes.dart';
+
+import 'model/notes.dart';
+import 'screens/new_note.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +16,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Note Taking App",
       initialRoute: "/",
-      routes: {"/": (context) => const HomePage()},
+      routes: {"/": (context) => const HomePage(),
+        "/AddNote":(context)=> const AddNote()
+      },
       theme: ThemeData(primarySwatch: Colors.deepOrange),
     );
   }
@@ -98,7 +102,9 @@ class _HomePageState extends State<HomePage> {
           },
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, "/AddNote");
+          },
           elevation: 5,
           child: const Icon(
             Icons.add,
