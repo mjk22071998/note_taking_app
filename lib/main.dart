@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 void main() {
@@ -42,6 +40,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  getNotes() async {
+    return await getNotes();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,6 +52,33 @@ class _HomePageState extends State<HomePage> {
           "Note Taking App",
           style: TextStyle(color: Colors.white),
         ),
+      ),
+      body: FutureBuilder(
+        future: getNotes(),
+        builder: (context, notesSnapshot) {
+          switch (notesSnapshot.connectionState) {
+            case ConnectionState.waiting:
+              {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            case ConnectionState.done:
+              {
+                if (notesSnapshot.data == null) {
+                  return const Center(
+                    child: Text(
+                        "You have'nt created any notes yet, Please create one"),
+                  );
+                } else {
+                  return Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Container(),
+                  );
+                }
+              }
+          }
+        },
       ),
     );
   }
