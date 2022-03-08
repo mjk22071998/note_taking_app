@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:note_taking_app/database/sqflite_database.dart';
+import 'package:note_taking_app/model/notes.dart';
 
 void main() {
   runApp(const MyApp());
@@ -41,7 +43,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   getNotes() async {
-    return await getNotes();
+    return await DBHelper.dbHelper.getAllNotes();
   }
 
   @override
@@ -56,6 +58,8 @@ class _HomePageState extends State<HomePage> {
       body: FutureBuilder(
         future: getNotes(),
         builder: (context, notesSnapshot) {
+          List<Map<String, dynamic>> maps =
+              notesSnapshot.data as List<Map<String, dynamic>>;
           switch (notesSnapshot.connectionState) {
             case ConnectionState.waiting:
               {
@@ -73,9 +77,24 @@ class _HomePageState extends State<HomePage> {
                 } else {
                   return Padding(
                     padding: const EdgeInsets.all(10),
-                    child: Container(),
+                    child: ListView.builder(
+                      itemCount: maps.length,
+                      itemBuilder: (context, index) {
+                        Notes note = Notes.fromMap(maps[index]);
+                        return Card( child:  ListTile(
+                          title: Text(note.title),
+                          subtitle: Text(note.body),
+                        ),);
+                      },
+                    ),
                   );
                 }
+              }
+              default:{
+                return const Center(
+                    child: Text(
+                        "You have'nt created any notes yet, Please create one"),
+                  );
               }
           }
         },
