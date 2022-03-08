@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Note Taking App",
       initialRoute: "/",
-      routes: {"/": (context) => HomePage()},
+      routes: {"/": (context) => const HomePage()},
       theme: ThemeData(
         colorScheme: ColorScheme(
           brightness: Brightness.light,
@@ -68,9 +68,14 @@ class _HomePageState extends State<HomePage> {
             case ConnectionState.done:
               {
                 if (notesSnapshot.data == null) {
-                  return const Center(
-                    child: Text(
-                        "You have'nt created any notes yet, Please create one"),
+                  return const Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Center(
+                      child: Text(
+                        "You have'nt created any notes yet, Please create one",
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                   );
                 } else {
                   List<Map<String, dynamic>> maps =
@@ -94,14 +99,24 @@ class _HomePageState extends State<HomePage> {
               }
             default:
               {
-                return const Center(
-                  child: Text(
-                      "You have'nt created any notes yet, Please create one"),
+                return const Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Center(
+                    child: Text(
+                      "You have'nt created any notes yet, Please create one",
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
                 );
               }
           }
         },
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){},
+        elevation: 5,
+        child: const Icon(Icons.add),
+      )
     );
   }
 }
