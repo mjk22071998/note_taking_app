@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,9 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Note Taking App",
       initialRoute: "/",
-      routes: {
-        "/": (context)=> HomePage()
-      },
+      routes: {"/": (context) => HomePage()},
       theme: ThemeData(
         colorScheme: ColorScheme(
           brightness: Brightness.light,
@@ -30,13 +30,12 @@ class MyApp extends StatelessWidget {
           onSurface: Colors.grey.shade100,
         ),
       ),
-      home: HomePage(),
     );
   }
 }
 
 class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -45,6 +44,13 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Note Taking App",
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+    );
   }
 }
