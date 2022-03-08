@@ -5,9 +5,9 @@ import 'package:sqflite/sqflite.dart';
 class DBHelper {
   DBHelper._();
   static final DBHelper dbHelper = DBHelper._();
-  late Database _database;
+  Database? _database;
 
-  Future<Database> get database async {
+  Future<Database?> get database async {
     if (_database == null) {
       _database = initDB();
       return _database;
@@ -38,13 +38,13 @@ class DBHelper {
 
   addNote(Notes note) async {
     final db = await database;
-    db.insert(tableName, note.toMap(),
+    db!.insert(tableName, note.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   Future<dynamic> getAllNotes() async {
     final db = await database;
-    List<Map> res = await db.query(tableName);
+    List<Map> res = await db!.query(tableName);
     if (res.isEmpty) {
       return null;
     } else {
