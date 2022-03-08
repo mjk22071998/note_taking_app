@@ -8,11 +8,13 @@ class DBHelper {
   late Database _database;
 
   Future<Database> get database async {
-    if (_database != null) {
+    if (_database == null) {
+      _database = initDB();
+      return _database;
+    } else{
       return _database;
     }
-    _database = initDB();
-    return _database;
+    
   }
 
   static const String tableName = "Notes";
