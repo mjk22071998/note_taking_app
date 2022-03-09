@@ -4,7 +4,7 @@ A new Flutter project.
 
 ## Getting Started
 
-**TODO:** Make it work on Desktop platforms as well and remove web platform.
+**TODO:** Make it work on Desktop platforms as well.
 
 **TODO:** Beautify the UI.
 
