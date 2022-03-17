@@ -55,7 +55,7 @@ class DBHelper {
   Future<int> deleteNote(int id) async {
     final db = await database;
     int count = await
-        db!.rawDelete('''DELETE FROM $tableName WHERE $col1Name = $id''');
+        db!.rawDelete('''DELETE FROM $tableName WHERE id = $id''');
     return count;
   }
 }
